@@ -74,16 +74,40 @@
   }
   .corner-shine:hover::after { opacity:1; }
 
-  /* ── LIGHT SWEEP on pricing cards ── */
-  .sweep { position:relative; overflow:hidden; }
-  .sweep::before {
-    content:'';
-    position:absolute; top:0; left:-120%; width:60%; height:100%;
-    background:linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.055) 50%, transparent 70%);
-    animation:sweepMove 4s ease-in-out infinite;
-    pointer-events:none; z-index:1;
+  /* ── TALKING HEAD RED LENS BORDER ── */
+  .lens-border {
+    position:relative;
   }
-  @keyframes sweepMove { 0%{left:-120%} 55%{left:160%} 100%{left:160%} }
+  .lens-border::after {
+    content:'';
+    position:absolute; inset:-1px;
+    border-radius:17px;
+    background:conic-gradient(
+      from var(--angle, 0deg),
+      transparent 0deg,
+      transparent 60deg,
+      rgba(200,30,50,0.0) 80deg,
+      rgba(220,40,60,0.9) 100deg,
+      rgba(255,80,80,1) 120deg,
+      rgba(220,40,60,0.9) 140deg,
+      rgba(200,30,50,0.0) 160deg,
+      transparent 200deg,
+      transparent 360deg
+    );
+    animation:lensRotate 3s linear infinite;
+    pointer-events:none; z-index:0;
+    mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite:exclude;
+    -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite:xor;
+    padding:1px;
+  }
+  @property --angle {
+    syntax:'<angle>';
+    initial-value:0deg;
+    inherits:false;
+  }
+  @keyframes lensRotate { to { --angle: 360deg; } }
 
   /* ── NAV ── */
   nav {
@@ -182,8 +206,8 @@
     transition:filter 0.3s;
   }
   .svc:hover .svc-name { filter:drop-shadow(0 0 18px rgba(200,30,50,0.75)); }
-  .svc-desc { font-size:12px; font-weight:500; color:#3a3a3a; line-height:1.75; position:relative; z-index:1; }
-  .svc-arrow { margin-top:1.3rem; font-size:11px; font-weight:700; color:#222; letter-spacing:1px; text-transform:uppercase; display:flex; align-items:center; gap:6px; transition:color 0.2s; position:relative; z-index:1; }
+  .svc-desc { font-size:12px; font-weight:500; color:#aaa; line-height:1.75; position:relative; z-index:1; }
+  .svc-arrow { margin-top:1.3rem; font-size:11px; font-weight:700; color:#666; letter-spacing:1px; text-transform:uppercase; display:flex; align-items:center; gap:6px; transition:color 0.2s; position:relative; z-index:1; }
   .svc:hover .svc-arrow { color:var(--red); }
 
   /* ── STATS ── */
@@ -191,7 +215,7 @@
   .stat-cell { padding:2rem 1.5rem; text-align:center; }
   .stat-n { font-size:2.4rem; font-weight:700; letter-spacing:-1px; color:#fff; position:relative; z-index:1; }
   .stat-n span { color:var(--red); }
-  .stat-l { font-size:11px; font-weight:500; color:#333; text-transform:uppercase; letter-spacing:1.5px; margin-top:6px; position:relative; z-index:1; }
+  .stat-l { font-size:11px; font-weight:500; color:#aaa; text-transform:uppercase; letter-spacing:1.5px; margin-top:6px; position:relative; z-index:1; }
 
   /* ── PORTFOLIO ── */
   .portfolio-tabs { display:flex; gap:8px; margin-bottom:1.5rem; flex-wrap:wrap; }
@@ -214,7 +238,7 @@
   .porto-info { padding:11px 14px 13px; }
   .porto-cat { font-size:9px; font-weight:700; color:var(--red); letter-spacing:2px; text-transform:uppercase; margin-bottom:3px; }
   .porto-title { font-size:13px; font-weight:700; color:#ccc; margin-bottom:2px; }
-  .porto-meta { font-size:10px; font-weight:500; color:#2a2a2a; }
+  .porto-meta { font-size:10px; font-weight:500; color:#777; }
 
   /* ── PRICING ── */
   .pricing-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
@@ -239,16 +263,16 @@
     filter:drop-shadow(0 0 7px rgba(160,24,40,0.4));
     margin-bottom:6px;
   }
-  .price-tagline { font-size:11px; font-weight:500; color:#333; line-height:1.65; margin-bottom:1rem; }
+  .price-tagline { font-size:11px; font-weight:500; color:#aaa; line-height:1.65; margin-bottom:1rem; }
   .price-amount { font-size:2.1rem; font-weight:700; color:#fff; letter-spacing:-1px; }
-  .price-amount span { font-size:13px; font-weight:500; color:#3a3a3a; }
+  .price-amount span { font-size:13px; font-weight:500; color:#888; }
   .price-divider { height:1px; background:rgba(255,255,255,0.04); margin:0 1.5rem; }
   .price-features { padding:1rem 1.5rem; flex:1; position:relative; z-index:2; }
-  .price-features li { list-style:none; font-size:12px; font-weight:500; color:#3a3a3a; padding:5px 0; display:flex; align-items:center; gap:8px; border-bottom:1px solid rgba(255,255,255,0.03); }
+  .price-features li { list-style:none; font-size:12px; font-weight:500; color:#bbb; padding:5px 0; display:flex; align-items:center; gap:8px; border-bottom:1px solid rgba(255,255,255,0.05); }
   .price-features li:last-child { border-bottom:none; }
   .price-features li i { font-size:14px; color:var(--red); flex-shrink:0; }
-  .price-bestfor { margin:0 1.5rem 1rem; background:rgba(160,24,40,0.07); border:1px solid rgba(160,24,40,0.14); border-radius:8px; padding:8px 12px; font-size:11px; font-weight:500; color:#4a1828; position:relative; z-index:2; }
-  .price-bestfor strong { color:#6a2030; font-weight:700; display:block; margin-bottom:2px; font-size:10px; letter-spacing:1px; text-transform:uppercase; }
+  .price-bestfor { margin:0 1.5rem 1rem; background:rgba(160,24,40,0.07); border:1px solid rgba(160,24,40,0.14); border-radius:8px; padding:8px 12px; font-size:11px; font-weight:500; color:#aaa; position:relative; z-index:2; }
+  .price-bestfor strong { color:#cc6070; font-weight:700; display:block; margin-bottom:2px; font-size:10px; letter-spacing:1px; text-transform:uppercase; }
   .price-btn { margin:0 1.5rem 1.5rem; background:rgba(255,255,255,0.04); color:#444; font-size:12px; font-weight:700; border:1px solid rgba(255,255,255,0.07); padding:11px; border-radius:8px; cursor:pointer; font-family:inherit; transition:all 0.2s; width:calc(100% - 3rem); position:relative; z-index:2; }
   .price-card.featured .price-btn { background:var(--red); color:#fff; border-color:var(--red); }
   .price-btn:hover { border-color:rgba(160,24,40,0.5); color:#fff; background:rgba(160,24,40,0.2); }
@@ -258,12 +282,12 @@
   .gicon { width:36px; height:36px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.09); border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0; position:relative; z-index:1; }
   .gicon i { font-size:18px; color:#ffffff; }
   .gtitle { font-size:13px; font-weight:700; color:#ddd; position:relative; z-index:1; }
-  .gsub { font-size:11px; font-weight:500; color:#333; margin-top:2px; position:relative; z-index:1; }
+  .gsub { font-size:11px; font-weight:500; color:#aaa; margin-top:2px; position:relative; z-index:1; }
 
   /* ── CTA BAND ── */
   .cta-band { margin:0 2.5rem; padding:2.5rem; display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap; position:relative; z-index:1; }
   .cta-title { font-size:1.6rem; font-weight:700; letter-spacing:-0.5px; color:#fff; position:relative; z-index:1; }
-  .cta-sub { font-size:13px; font-weight:500; color:#3a3a3a; margin-top:6px; position:relative; z-index:1; }
+  .cta-sub { font-size:13px; font-weight:500; color:#aaa; margin-top:6px; position:relative; z-index:1; }
   .cta-btn { background:var(--red); color:#fff; font-size:13px; font-weight:700; border:none; padding:14px 30px; border-radius:9px; cursor:pointer; font-family:inherit; white-space:nowrap; position:relative; z-index:1; transition:background 0.2s; }
   .cta-btn:hover { background:#c0202e; }
 
@@ -273,14 +297,14 @@
   .contact-item { display:flex; align-items:center; gap:12px; position:relative; z-index:1; }
   .cicon { width:40px; height:40px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.09); border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
   .cicon i { font-size:20px; color:#ffffff; }
-  .clabel { font-size:10px; font-weight:700; color:#252525; text-transform:uppercase; letter-spacing:1.5px; }
-  .cval { font-size:13px; font-weight:500; color:#888; margin-top:2px; }
+  .clabel { font-size:10px; font-weight:700; color:#777; text-transform:uppercase; letter-spacing:1.5px; }
+  .cval { font-size:13px; font-weight:500; color:#ddd; margin-top:2px; }
   .contact-actions { display:flex; gap:10px; position:relative; z-index:1; flex-wrap:wrap; }
 
   /* ── FOOTER ── */
   footer { padding:1.5rem 2.5rem; margin-top:2.5rem; border-top:1px solid rgba(255,255,255,0.04); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; position:relative; z-index:1; }
-  .footer-copy { font-size:11px; font-weight:500; color:#1e1e1e; }
-  .footer-copy span { color:#2e2e2e; }
+  .footer-copy { font-size:11px; font-weight:500; color:#666; }
+  .footer-copy span { color:#888; }
   .socials { display:flex; gap:8px; }
   .sbtn { width:32px; height:32px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); border-radius:7px; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:border-color 0.2s; }
   .sbtn:hover { border-color:rgba(160,24,40,0.4); }
@@ -463,7 +487,7 @@
   <div class="sec-head"><div class="sec-title">Pricing</div><div class="sec-count">Simple & transparent</div></div>
   <div class="pricing-grid">
 
-    <div class="price-card glass glass-hover sweep corner-shine">
+    <div class="price-card glass glass-hover corner-shine">
       <div class="price-top">
         <div class="price-icon-wrap"><i class="ti ti-device-mobile"></i></div>
         <div class="price-name">Short Form Reels</div>
@@ -483,7 +507,7 @@
       <button class="price-btn" onclick="window.open('https://wa.me/8801723559737','_blank')">Get Started ↗</button>
     </div>
 
-    <div class="price-card glass featured sweep corner-shine">
+    <div class="price-card glass featured lens-border">
       <div class="price-top">
         <div class="price-icon-wrap"><i class="ti ti-user-circle"></i></div>
         <div class="featured-tag">Most Popular</div>
@@ -504,7 +528,7 @@
       <button class="price-btn" onclick="window.open('https://wa.me/8801723559737','_blank')">Get Started ↗</button>
     </div>
 
-    <div class="price-card glass glass-hover sweep corner-shine">
+    <div class="price-card glass glass-hover corner-shine">
       <div class="price-top">
         <div class="price-icon-wrap"><i class="ti ti-microphone-2"></i></div>
         <div class="price-name">Podcast Intro / Promo</div>
@@ -525,11 +549,11 @@
 
   </div>
   <div class="guarantee-row">
-    <div class="guarantee glass sweep">
+    <div class="guarantee glass">
       <div class="gicon"><i class="ti ti-refresh"></i></div>
       <div><div class="gtitle">2 Revision Rounds</div><div class="gsub">We refine until it's exactly right.</div></div>
     </div>
-    <div class="guarantee glass sweep">
+    <div class="guarantee glass">
       <div class="gicon"><i class="ti ti-messages"></i></div>
       <div><div class="gtitle">Collaborative Feedback</div><div class="gsub">Your input shapes every cut.</div></div>
     </div>
@@ -537,7 +561,7 @@
 </section>
 
 <!-- CTA -->
-<div class="cta-band glass sweep corner-shine">
+<div class="cta-band glass corner-shine">
   <div>
     <div class="cta-title">Ready to work together?</div>
     <div class="cta-sub">Send your brief and let's build something great.</div>
